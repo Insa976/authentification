@@ -32,7 +32,7 @@
 			<h1>Bienvenue</h1>
 			<?php if (isset($_SESSION["iduser"])): ?>
 				<p></p>
-			<?php endif ?>	
+			<?php endif ?>
 		</div>
 		<div class="container" style="margin-top:30px">
 			<div class="row justify-content-md-center">
@@ -42,7 +42,6 @@
 				<div class="col-md-6 form-group">
 					<a href="connexion.php" class="form-control btn btn-lg btn-info">Se connecter</a>
 				</div>
-				
 			</div>
 		</div>
 	</body>
