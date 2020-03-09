@@ -4,7 +4,7 @@
 function connect() {
 
     $host = "127.0.0.1"; //Ou localhost
-    $port = 3308;
+    $port = 3306;
     $user = "root";
     $pass = "insa";
     $db = "authentification";
@@ -23,7 +23,7 @@ class User {
     //Fonction qui permet de retourner les réulstat d'un user s'il existe
     public function getUserById($iduser) {
     	$pdo = connect();
-        $smtp = $pdo->prepare("SELECT * FROM user WHERE iduser=".$iduser);
+        $smtp = $pdo->prepare("SELECT * FROM users U LEFT JOIN data D ON U.iduser=D.iduser WHERE U.iduser='".$iduser."'");
     	$smtp->execute();
     	$donnees = $smtp->fetch();
     	return $donnees;
@@ -32,16 +32,10 @@ class User {
     //Fonction qui permet de verifier si l'adresse email existe déjà
     public function getUserByEmail($email) {
     	$pdo = connect();
-        $smtp = $pdo->prepare("SELECT * FROM users WHERE email=".$email);
+        $smtp = $pdo->prepare("SELECT * FROM users WHERE email='".$email."'");
     	$smtp->execute();
 
-    	if ($smtp->rowCount() > 0) {
-    		//Si email existe déjà, retourne -1
-	        return -1;
-	    } else {
-	    	//Sinon retourne ok
-	        return "ok";
-	    }
+    	return $smtp;
     }
 
     //Fonction qui permet de faire la connexion 

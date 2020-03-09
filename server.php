@@ -5,6 +5,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 $user = new User();
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////
 if (isset($_POST["inscription"])) {
 	//Mes données saisi dans le formulaire
 	$nom = $_POST["nom"];
@@ -32,14 +33,27 @@ if (isset($_POST["inscription"])) {
 		$verif = true;
 	}
 
+	$leuser=$user->getUserByEmail($_POST["email"]);
+
+	//Si email existe déjà, retourne -1
+	if ($leuser->rowCount() > 0 && $verif===false) {
+		$msg.="<li>L'adresse e-mail existe déjà</li>";
+		$verif = true;
+    }
+
+
+
 	//Si y a pas d'erreurs
 	if ($verif===false) {
-		echo "coucou";
+		$user->setUser($_POST["nom"], $_POST["prenom"], $_POST["email"], md5($_POST["mdp"]));
+		$le_user = $user->getUserByEmail($_POST["email"]);
+		$iduser = $le_user->fetch();
+		$_SESSION['iduser']=$iduser['iduser'];
 	}
 
 }
 
-
+/////////////////////////////////////////////////////////////////////////////////////////
 if (isset($_POST["connexion"])) {
 
 	$email = $_POST["email"];
@@ -57,15 +71,15 @@ if (isset($_POST["connexion"])) {
 		}
 	}
 
-	var_dump($user->getConnexion($email, md5($mdp)));
-
-	// if (is_numeric($user->getConnexion($email, md5($mdp))) && $verif===false ) {
-	// 	$msg.="<li>L'adresse e-mail saisie ou le mot de passe n'est pas correcte!</li>";
-	// 	$verif = true;
-	// }
+	if (is_numeric($user->getConnexion($email, md5($mdp))) && $verif===false ) {
+		$msg.="<li>L'adresse e-mail saisie ou le mot de passe n'est pas correcte!</li>";
+		$verif = true;
+	}
 
 	//Si y a pas d'erreurs
 	if ($verif===false) {
-		echo "coucou";
+		$le_user = $user->getUserByEmail($_POST["email"]);
+		$iduser = $le_user->fetch();
+		$_SESSION['iduser']=$iduser['iduser'];
 	}
 }

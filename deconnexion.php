@@ -16,7 +16,7 @@
 <html>
 <head>
 	<title>Déconnexion</title>
-	<meta http-equiv="refresh" content="2; ../connexion/" />
+	<meta http-equiv="refresh" content="2; connexion.php" />
 </head>
 <body>
 	<h1 size="6">Déconnexion en cours ...</h1><br>

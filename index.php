@@ -1,6 +1,9 @@
 <?php
 	if (session_status() === PHP_SESSION_NONE) session_start();
 	require_once "server.php";
+	if (isset($_SESSION["iduser"])){
+		$leuser=$user->getUserById($_SESSION["iduser"]);
+	}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -31,18 +34,28 @@
 		<div class="jumbotron text-center" style="margin-bottom:0">
 			<h1>Bienvenue</h1>
 			<?php if (isset($_SESSION["iduser"])): ?>
-				<p></p>
+				<h3><?php echo $leuser["nom"]." ".$leuser["prenom"];?></h3>
 			<?php endif ?>	
 		</div>
 		<div class="container" style="margin-top:30px">
 			<div class="row justify-content-md-center">
-				<div class="col-md-6 form-group">
-					<a href="inscription.php" class="form-control btn btn-lg btn-info">S'inscrire</a>
-				</div>
-				<div class="col-md-6 form-group">
-					<a href="connexion.php" class="form-control btn btn-lg btn-info">Se connecter</a>
-				</div>
-				
+				<?php if (isset($_SESSION["iduser"])): ?>
+					<div class="col-md-8 form-group">
+						<h4>Mes informations : </h4>
+						<hr>
+						Nom : <?php $nom = (empty($leuser["nom"]))? "Pas disponible" : $leuser["nom"]; echo $nom;?><br>
+						Prénom : <?php $prenom = (empty($leuser["prenom"]))? "Pas disponible" : $leuser["prenom"]; echo $prenom;?><br>
+						Adresse e-mail : <?php $email = (empty($leuser["email"]))? "Pas disponible" : $leuser["email"]; echo $email;?><br>
+						CB : <?php $cb = (empty($leuser["CB"]))? "Pas disponible" : $leuser["CB"]; echo $cb;?>
+					</div>
+				<?php else : ?>
+					<div class="col-md-6 form-group">
+						<a href="inscription.php" class="form-control btn btn-lg btn-info">S'inscrire</a>
+					</div>
+					<div class="col-md-6 form-group">
+						<a href="connexion.php" class="form-control btn btn-lg btn-info">Se connecter</a>
+					</div>
+				<?php endif ?>
 			</div>
 		</div>
 	</body>
