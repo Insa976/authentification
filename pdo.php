@@ -6,7 +6,7 @@ function connect() {
     $host = "127.0.0.1"; //Ou localhost
     $port = 3308;
     $user = "root";
-    $pass = "";
+    $pass = "insa";
     $db = "authentification";
 
     try {
@@ -32,7 +32,7 @@ class User {
     //Fonction qui permet de verifier si l'adresse email existe déjà
     public function getUserByEmail($email) {
     	$pdo = connect();
-        $smtp = $pdo->prepare("SELECT * FROM user WHERE email=".$email);
+        $smtp = $pdo->prepare("SELECT * FROM users WHERE email=".$email);
     	$smtp->execute();
 
     	if ($smtp->rowCount() > 0) {
@@ -47,7 +47,7 @@ class User {
     //Fonction qui permet de faire la connexion 
     public function getConnexion($email, $mdp) {
     	$pdo = connect();
-        $smtp = $pdo->prepare("SELECT * FROM user WHERE email='".$email."' AND mdp='".$mdp."' ");
+        $smtp = $pdo->prepare("SELECT * FROM users WHERE email='".$email."' AND mdp='".$mdp."' ");
     	$smtp->execute();
 
     	//Si on trouve un résultat, la connexion est établie

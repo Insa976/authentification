@@ -15,9 +15,8 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 		<style type="text/css">
-			#msgErreur li{
-				color: red;
-			}
+			#msgErreur li{ color: red; }
+			#msgErreur{ background-color: #fff; }
 		</style>
 	</head>
 	<body>
@@ -40,25 +39,25 @@
 		</div>
 		<div class="container" style="margin-top:30px">
 			<div class="row justify-content-md-center">
-				<div class="col-md-6 border py-4 rounded bg-light">
-						<?php if (isset($verif) && $verif===true)
-							echo '<ul id="msgErreur">'.$msg.'</ul>';
-						?>
+				<div class="col-md-6 border py-4 rounded bg-dark">
+					<?php if (isset($verif) && $verif===true)
+						echo '<ul id="msgErreur">'.$msg.'</ul>';
+					?>
 					<form method="POST" action="inscription.php">
 						<div class="form-group">
-							<input class="form-control" type="text" name="nom" placeholder="Nom">
+							<input class="form-control" type="text" name="nom" value="<?php if(isset($_POST['inscription'])) echo $_POST['nom']; ?>" placeholder="Nom">
 						</div>
 						<div class="form-group">
-							<input class="form-control" type="text" name="prenom" placeholder="Prénom">
+							<input class="form-control" type="text" name="prenom" value="<?php if(isset($_POST['inscription'])) echo $_POST['prenom']; ?>" placeholder="Prénom">
 						</div>
 						<div class="form-group">
-							<input class="form-control" type="email" name="email" placeholder="Adresse e-mail">
+							<input class="form-control" type="email" name="email" value="<?php if(isset($_POST['inscription'])) echo $_POST['email']; ?>" placeholder="Adresse e-mail">
 						</div>
 						<div class="form-group">
-							<input class="form-control" type="password" name="mdp1" placeholder="Mot de passe">
+							<input class="form-control" type="password" name="mdp1" value="<?php if(isset($_POST['inscription'])) echo $_POST['mdp1']; ?>" placeholder="Mot de passe">
 						</div>
 						<div class="form-group">
-							<input class="form-control" type="password" name="mdp2" placeholder="Confirmation du mot de passe">
+							<input class="form-control" type="password" name="mdp2" value="<?php if(isset($_POST['inscription'])) echo $_POST['mdp2']; ?>" placeholder="Confirmation du mot de passe">
 						</div>
 						<button class="btn btn-primary" type="submit" name="inscription">S'inscrire</button>
 					</form>

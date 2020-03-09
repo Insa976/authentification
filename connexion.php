@@ -1,3 +1,9 @@
+<?php
+	if (session_status() === PHP_SESSION_NONE) session_start();
+	require_once "server.php";
+
+	if (isset($_SESSION["iduser"])) header("Location:index.php");
+?>
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
@@ -8,6 +14,10 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+		<style type="text/css">
+			#msgErreur li{ color: red; }
+			#msgErreur{ background-color: #fff; }
+		</style>
 	</head>
 	<body>
 		<nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
@@ -29,13 +39,16 @@
 		</div>
 		<div class="container" style="margin-top:30px">
 			<div class="row justify-content-md-center">
-				<div class="col-md-6 border py-4 rounded bg-light">
+				<div class="col-md-6 border py-4 rounded bg-dark">
+					<?php if (isset($verif) && $verif===true)
+						echo '<ul id="msgErreur">'.$msg.'</ul>';
+					?>
 					<form method="POST" action="connexion.php">
 						<div class="form-group">
-							<input class="form-control" type="email" name="email" placeholder="Adresse e-mail">
+							<input class="form-control" type="email" name="email" value="<?php if(isset($_POST['connexion'])) echo $_POST['email'] ?>" placeholder="Adresse e-mail">
 						</div>
 						<div class="form-group">
-							<input class="form-control" type="password" name="mdp1" placeholder="Mot de passe">
+							<input class="form-control" type="password" name="mdp" value="<?php if(isset($_POST['connexion'])) echo $_POST['mdp'] ?>" placeholder="Mot de passe">
 						</div>
 						<button class="btn btn-primary" type="submit" name="connexion">Se connecter</button>
 					</form>

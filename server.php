@@ -1,7 +1,7 @@
 <?php
+require_once "pdo.php";
 if (session_status() === PHP_SESSION_NONE) session_start();
 
-require_once "pdo.php";
 $user = new User();
 
 
@@ -27,7 +27,7 @@ if (isset($_POST["inscription"])) {
 		}
 	}
 
-	if ($mdp1!=$mdp2) {
+	if ($mdp1!=$mdp2 && $verif===false) {
 		$msg.="<li>Les deux mots de passe ne sont pas identiques</li>";
 		$verif = true;
 	}
@@ -57,8 +57,15 @@ if (isset($_POST["connexion"])) {
 		}
 	}
 
+	var_dump($user->getConnexion($email, md5($mdp)));
+
+	// if (is_numeric($user->getConnexion($email, md5($mdp))) && $verif===false ) {
+	// 	$msg.="<li>L'adresse e-mail saisie ou le mot de passe n'est pas correcte!</li>";
+	// 	$verif = true;
+	// }
+
 	//Si y a pas d'erreurs
-	if ($verif===true) {
+	if ($verif===false) {
 		echo "coucou";
 	}
 }
